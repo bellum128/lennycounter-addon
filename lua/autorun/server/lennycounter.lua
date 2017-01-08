@@ -32,7 +32,10 @@ hook.Add("Initialize","LennyInit", LennyCounter.Initialize)
 
 function LennyCounter.PlayerSay(ply, text, team )
 
-	if(string.contains(string.lower(text), "!lenny")) then
+	cmdText = string.TrimLeft(text)
+	cmdText = string.sub(cmdText, 1, 6)
+
+	if(string.contains(string.lower(cmdText), "!lenny")) then
 		LennyCounter.NotifyLennyCount(HUD_PRINTTALK, ply)
 		return ""
 	end
