@@ -32,10 +32,10 @@ hook.Add("Initialize","LennyInit", LennyCounter.Initialize)
 
 function LennyCounter.PlayerSay(ply, text, team )
 
-	cmdText = string.TrimLeft(text)
-	cmdText = string.sub(cmdText, 1, 6)
+	local textLeftTrim = string.TrimLeft(text)
+	local cmdText = string.sub(textLeftTrim, 1, 6)
 
-	if(string.contains(string.lower(cmdText), "!lenny")) then
+	if(string.lower(cmdText) == "!lenny" && (textLeftTrim == cmdText)) then
 		LennyCounter.NotifyLennyCount(HUD_PRINTTALK, ply)
 		return ""
 	end
@@ -61,7 +61,6 @@ function LennyCounter.NotifyLennyCount(type, ply)
 		else
 			ply:PrintMessage(type, "Lenny Face has been used " .. tostring(LennyCounter.GetLennyCount()) .. " times today!")
 		end
-
 	end)
 end
 
@@ -116,7 +115,7 @@ function LennyCounter.ResetCount()
 end
 
 function LennyCounter.IsLenny(text)
-	result = false
+	local result = false
 
 	for i = 1, #LennyCounter.openings do
 		if(CheckLennyWithDeliminators(text, LennyCounter.openings[i], LennyCounter.closings[i])) then
@@ -129,7 +128,7 @@ function LennyCounter.IsLenny(text)
 end
 
 function CheckLennyWithDeliminators(text, opening, closing)
-	result = false
+	local result = false
 
 	if(string.contains(text, opening)) then
 		textAfterFirstDel = string.sub(text, string.find(text, opening, 1, true) + 1)
